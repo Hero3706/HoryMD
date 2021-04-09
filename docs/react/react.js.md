@@ -327,7 +327,7 @@ class App extends Component {
   }
 }
 **/
-// 如果不想生成多余的一层dom可以使用React提供的Fragment组件在最外层进行包裹
+// 如果不想生成多余的一层dom可以使用React提供的Fragment组件在最外层进行包裹 简写就是一个空标签<></> 可以作为React的优化
 class App extends Component {
   render () {
     return (
@@ -346,7 +346,7 @@ ReactDOM.render(
 
 
 
-#五、JSX 原理
+# 五、JSX 原理
 
 要明白JSX的原理，需要先明白如何用 JavaScript 对象来表现一个 DOM 元素的结构?
 
@@ -463,7 +463,7 @@ React.createElement(
 
 
 
-#六、组件中DOM样式
+# 六、组件中DOM样式
 
 - 行内样式
 
@@ -490,10 +490,55 @@ React推荐我们使用行内样式，因为React觉得每一个组件都是一�
 
 有时候需要根据不同的条件添加不同的样式，比如：完成状态，完成是绿色，未完成是红色。那么这种情况下，我们推荐使用[classnames](<https://www.npmjs.com/package/classnames>)这个包：
 
+```jsx
+import React, { Fragment } from "react"
+import classNames from 'classnames'
+import './style.css'
+class App extends React.Component{
+  state={
+    style:'font',
+    isPressed:false,
+    isHovered:true
+  }
+  render(){
+    var btnClass=classNames({
+      font: true,
+      'btn-pressed': this.state.isPressed,
+      'btn-over': !this.state.isPressed && this.state.isHovered
+    });
+    return(
+     <Fragment>
+       {/* 此时的类名为btn-over */}
+        <h1 className={btnClass}>{this.props.title}</h1>
+      {this.props.children}
+     </Fragment>
+    )
+  }
+}
+
+export default App
+```
+
 - css-in-js
 
 `styled-components`是针对React写的一套css-in-js框架，简单来讲就是在js中写css。[npm链接](<https://www.npmjs.com/package/styled-components>)
 
+```jsx
+// 在一个js文件中导出
+import styled from 'styled-components'
+
+const Container = styled.div `
+  font-size:30px;
+  color:red
+`
+
+export {
+  Container
+}
+
+//在另一个组件中导入 并当组件使用
+import { Container } from './Styled'
+```
 
 
 # 七、组件的数据挂载方式
@@ -505,6 +550,9 @@ React推荐我们使用行内样式，因为React觉得每一个组件都是一�
 属性是描述性质、特点的，组件自己不能随意更改。
 
 之前的组件代码里面有`props`的简单使用，总的来说，在使用一个组件的时候，可以把参数放在标签的属性当中，所有的属性都会作为组件 `props` 对象的键值。通过箭头函数创建的组件，需要通过函数的参数来接收`props`:
+
+在jsx使用js 需要使用单个花括号    当子元素不使用props时不会默认挂载到子根节点
+
 
 ```jsx
 import React, { Component, Fragment } from 'react'
@@ -541,7 +589,7 @@ ReactDOM.render(
 )
 ```
 
-###(1) 设置组件的默认props
+### (1) 设置组件的默认props 两种方法
 
 ```jsx
 import React, { Component, Fragment } from 'react'
@@ -635,13 +683,115 @@ React其实是为了构建大型应用程序而生, 在一个大型应用中，�
 $ npm i prop-types -S
 ```
 
+```jsx
+import React, { Component } from 'react'
+import Child2 from './Child2'
+import { 
+  array,
+  symbol,
+  node,
+  bool,
+  element, 
+  string,
+  elementType,
+  instanceOf,
+  oneOf,
+  oneOfType,
+  // arrayOf,
+  // objectOf,
+  // number,
+  // shape,
+  // exact
+} from 'prop-types'
+
+class Child extends Component {
+  static defaultProps = {
+    url: 'http://qfedu.com'
+  }
+
+  static propTypes = {
+    // Title: string
+    // title: array
+    // title: symbol
+    // title: node
+    //自定义组件也是element 一定要传入实例化好的 
+    // title: element 
+    //elementType 可以直接传入未实例化的类 使用时必须实例化一下  这个可以在写组件时做验证
+    // title: elementType
+    // title: instanceOf(Child2)
+    //确切的某一个值
+    // title: oneOf(['abc', 'def'])
+    //只要这些范围内的值都可以
+    title2: oneOfType([
+      string,
+      array,
+      bool,
+      node,
+      symbol,
+      element,
+      elementType,
+      oneOf(['abc', 'def']),
+      instanceOf(Child2)
+    ]),
+    //某种类型的数组
+    // title: arrayOf(string)
+    //具有特定类型属性值的对象
+    // title: objectOf(number)
+    
+    //非精确对象匹配
+    // title: shape({
+    //   x: string,
+    //   y: number
+    // })
+
+    //精确对象匹配
+    // title: exact({
+    //   x: string,
+    //   y: number
+    //isRequired 必须填
+    // }).isRequired
+
+    //自定义使用
+    title: (props, propName, componentName) => {
+      // return new Error('出错了。')
+    }
+  }
+
+  render() {
+    // console.log(this)
+    // this.props.url = 'http://qfedu.com'
+    // let Title = this.props.title
+    
+    // 不能在模板里使用小写字母开头的自定义组件，
+    // 但却可以使用引用小写字母的开头props的变量充当组件使用
+    
+    return (
+      <div>
+        {/* { this.props.url } */}
+        {/* { this.props.children } */}
+        {/* { this.props.title } */}
+        {/* { this.props.Title } */}
+        {/* { <this.props.title /> } */}
+        {/* {JSON.stringify({title: 100})} */}
+      </div>
+    );
+  }
+}
+
+// Child.defaultProps = {
+//   url: 'http://qfedu.com'
+// }
+
+export default Child;
+```
 
 
-##2、状态(state)
+
+## 2、状态(state)
 
 状态就是组件描述某种显示情况的数据，由组件自己设置和更改，也就是说由组件自己维护，使用状态的目的就是为了在不同的状态下使组件的显示不同(自己管理)
 
-###(1) 定义state
+### (1) 定义state
 
 第一种方式
 
@@ -708,9 +858,13 @@ ReactDOM.render(
 
 `this.props`和`this.state`是纯js对象,在vue中，data属性是利用`Object.defineProperty`处理过的，更改​data的数据的时候会触发数据的`getter`和`setter`，但是React中没有做这样的处理，如果直接更改的话，react是无法得知的，所以，需要使用特殊的更改状态的方法`setState`。
 
-###(2) setState
+### (2) setState
 
 `isLiked` 存放在实例的 `state` 对象当中，组件的 `render` 函数内，会根据组件的 `state` 的中的`isLiked`不同显示“取消”或“收藏”内容。下面给 `button` 加上了点击的事件监听。
+
+使用this.setState  this指向会出错 在使用时使用箭头函数 或者bind 
+
+这个render 会自动调用 新值重新渲染 即使每次修改的值相同  rander还会重复执行  可以使用PureComponent 
 
 ```jsx
 import React, { Component } from 'react'
@@ -784,7 +938,40 @@ this.setState((prevState, props) => {
 })
 console.log('setState外部的',this.state.isLiked)
 ```
+数组的情况下
 
+ react中 虚拟DOM逐层比较时 自定义组件 以及原来的标签都需要使用key 
+
+ 在使用引用时 使用push 并不会响应式 需要在使用一下this.setState({})   在使用时 就需要原生js来遍历出来
+
+ ```jsx
+ import React, { Component, Fragment } from "react"
+class Child extends Component {
+    state = {
+            list:['a','b','c']
+        }
+      clickHandler=()=>{
+        this.state.list.push('d')
+        //需要在下面引入一个空的 否则不能响应式
+        this.setState({})
+      }
+    render() {
+        return (
+            <div>
+               <ul>
+                   {
+                   
+                       this.state.list.map(value=><li key={value}>{value}</li>)
+                   }
+               </ul>
+               <button onClick={this.clickHandler}>按钮</button>
+            </div>
+
+        )
+    }
+}
+export default Child
+ ```
 
 
 ## 3、属性vs状态
@@ -810,19 +997,159 @@ console.log('setState外部的',this.state.isLiked)
 
 
 
-##4、状态提升
+## 4、状态提升
 
 如果有多个组件共享一个数据，把这个数据放到共同的父级组件中来管理
+父子组件传参
+
+父到子 使用自定义属性 子组件通过 this.props拿到   
+
+子到父 父组件使用自定义事件 子组件使用this.props 函数名触发他
 
 
+!(https://imgtu.com/i/c1zlUH)
+!(https://imgtu.com/i/c1zrPs)
+
+兄弟组件传参 即状态提升 lifting-state-up
+父组件中
+```jsx
+import React, { Component } from 'react'
+import Child from './Child'
+import Child2 from './Child2'
+
+class LiftingSateUp extends Component {
+  state = {
+    data: ''
+  }
+  handleReceiveData = data => {
+    this.setState({
+      data
+    })
+  }
+  render() {
+    return (
+      <div>
+        <h1>parent</h1>
+        <Child 
+          title="hello" 
+          onReceiveData={this.handleReceiveData}
+        ></Child>
+        <Child2 data={this.state.data}></Child2>
+      </div>
+    );
+  }
+}
+export default LiftingSateUp;
+```
+子组件1中
+```jsx
+import React, { Component } from 'react';
+
+class Child extends Component {
+  handleClick = () => {
+    this.props.onReceiveData('hello')
+  }
+  render() {
+    return (
+      <>
+        <div>
+          { this.props.title }
+        </div>
+        <div>
+          <button onClick={this.handleClick}>send</button>
+        </div>
+      </>
+    )
+  }
+}
+
+export default Child;
+```
+子组件2中
+```jsx
+import React, { Component } from 'react';
+
+class Child2 extends Component {
+  render() {
+    return (
+      <div>
+        { this.props.data }
+      </div>
+    );
+  }
+}
+
+export default Child2;
+```
 
 ## 5、受控组件与非受控组件 
 
 React组件的数据渲染是否被调用者传递的`props`完全控制，控制则为受控组件，否则非受控组件。
 
+受控组件
+使用value 就必须使用onChange 
+```jsx
+import React from "react"
+class App extends React.Component{
+  state = {
+    inputValue: 'abc'
+  }
+  handleChange = (e) => {
+    this.setState({
+      inputValue: e.target.value
+    })
+  }
+  render(){
 
+    return(
+      <div>
+     <input
+          type="text"
+          value={this.state.inputValue}
+          onChange={this.handleChange}
+        /> {this.state.inputValue}
+      </div>
+    )
+  }
+}
+export default App
+```
+
+受控组件
+
+value不能和defaultValue 一起使用
+非受控组件使用defaultValue  结合自己的事件  了解
+```jsx
+import React from "react"
+class App extends React.Component{
+  state = {
+    inputValue: 'abc'
+  }
+  handleInput = (e) => {
+    this.setState({
+      inputValue: e.target.value
+    })
+  }
+  render(){
+
+    return(
+      <div>
+     <input
+     //这就相当于v-module 语法糖
+          type="text"
+          defaultValue={this.state.inputValue}
+          onInput={this.handleInput}
+        /> {this.state.inputValue}
+      </div>
+    )
+  }
+}
+export default App
+```
 
 ## 6、渲染数据
+
+使用label  时 将原来的for 要改成htmlFor  不能在元素上使用for和class作为属性关键字
 
 - 条件渲染
 
@@ -1009,13 +1336,13 @@ ReactDOM.render(
 
 ## 1、受控组件
 
-在 HTML 中，表单元素（如<input>、 <textarea> 和 <select>）通常自己维护 state，并根据用户输入进行更新。而在 React 中，可变状态（mutable state）通常保存在组件的 state 属性中，并且只能通过使用`setState()`来更新。
+在 HTML 中，表单元素（如`<input>、 <textarea> 和 <select>`）通常自己维护 state，并根据用户输入进行更新。而在 React 中，可变状态（mutable state）通常保存在组件的 state 属性中，并且只能通过使用`setState()`来更新。
 
 我们可以把两者结合起来，使 React 的 state 成为“唯一数据源”。渲染表单的 React 组件还控制着用户输入过程中表单发生的操作。被 React 以这种方式控制取值的表单输入元素就叫做“受控组件”。
 
 例如，如果我们想让前一个示例在提交时打印出名称，我们可以将表单写为受控组件：
 
-```javascript
+```jsx
 class NameForm extends React.Component {
   constructor(props) {
     super(props);
@@ -1053,8 +1380,8 @@ class NameForm extends React.Component {
 对于受控组件来说，输入的值始终由 React 的 state 驱动。你也可以将 value 传递给其他 UI 元素，或者通过其他事件处理函数重置，但这意味着你需要编写更多的代码。
 
 
+## 2、textarea标签
 
-## 2、textarea 标签
 在 HTML 中, `<textarea>` 元素通过其子元素定义其文本:
 
 ```
@@ -1402,7 +1729,7 @@ ReactDOM.render(
 
 
 
-#十、TodoList
+# 十、TodoList
 
 组件化开发React todolist， 项目开发中的组件的基本目录结构基本上是这样的：
 
@@ -1440,7 +1767,7 @@ React中组件也有生命周期，也就是说也有很多钩子函数供我们
 
    
 
-##2、更新阶段
+## 2、更新阶段
 
 `props`或`state`的改变可能会引起组件的更新，组件重新渲染的过程中会调用以下方法： 
 
@@ -1454,19 +1781,19 @@ React中组件也有生命周期，也就是说也有很多钩子函数供我们
 
 
 
-##3、卸载阶段
+## 3、卸载阶段
 
 1. componentWillUnmount()
 
 
 
-##4、错误处理
+## 4、错误处理
 
 1. componentDidCatch()
 
 
 
-##5、各生命周期详解
+## 5、各生命周期详解
 
 **(1) constructor(props)**
 
@@ -1661,7 +1988,7 @@ React不会在组件初始化props时调用这个方法。调用`this.setState`�
 
 
 
-##6、PureComponent
+## 6、PureComponent
 
 `PureComponnet`里如果接收到的新属性或者是更改后的状态和原属性、原状态相同的话，就不会去重新render了
 在里面也可以使用`shouldComponentUpdate`，而且。是否重新渲染以`shouldComponentUpdate`的返回值为最终的决定因素。
@@ -1676,7 +2003,7 @@ class YourComponent extends PureComponent {
 
 
 
-##7、ref
+## 7、ref
 
 React提供的这个`ref`属性，表示为对组件真正实例的引用，其实就是`ReactDOM.render()`返回的组件实例,`ref`可以挂载到组件上也可以是dom元素上。
 
@@ -1998,9 +2325,9 @@ export default Page;
 
 
 
-#十五、状态管理
+# 十五、状态管理
 
-##1、传统MVC框架的缺陷
+## 1、传统MVC框架的缺陷
 
 **什么是MVC？**
 
@@ -2020,7 +2347,7 @@ MVC框架的数据流很理想，请求先到Controller, 由Controller调用Mode
 
 ![image-20190420012010718](./images/defect-of-mvc.png)
 
-##2、Flux
+## 2、Flux
 
 在2013年，Facebook让`React`亮相的同时推出了Flux框架，`React`的初衷实际上是用来替代`jQuery`的，`Flux`实际上就可以用来替代`Backbone.js`，`Ember.js`等一系列`MVC`架构的前端JS框架。
 
@@ -2048,7 +2375,7 @@ Flux的流程：
 
 
 
-##3、Redux
+## 3、Redux
 
 React 只是 DOM 的一个抽象层，并不是 Web 应用的完整解决方案。有两个方面，它没涉及。
 
@@ -2409,7 +2736,7 @@ React 只是 DOM 的一个抽象层，并不是 Web 应用的完整解决方案�
 
 
 
-###(2) 使用Redux框架
+### (2) 使用Redux框架
 
 **Redux的流程：**
 
@@ -2499,7 +2826,7 @@ function reducer(state = defaultState, action) {
 
 
 
-###(3) 容器组件（Smart/Container Components）和展示组件（Dumb/Presentational Components）
+### (3) 容器组件（Smart/Container Components）和展示组件（Dumb/Presentational Components）
 
 |                | 展示组件                   | 容器组件                           |
 | -------------: | :------------------------- | :--------------------------------- |
@@ -3079,7 +3406,7 @@ console.log(aRange)
 
 
 
-##5、在redux中使用immutable.js
+## 5、在redux中使用immutable.js
 
 [redux官网](<https://redux.js.org/recipes/using-immutablejs-with-redux>)推荐使用[redux-immutable](<https://www.npmjs.com/package/redux-immutable>)进行redux和immutable的集成。几个注意点：
 
