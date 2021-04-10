@@ -1455,7 +1455,7 @@ hack2：给li加float：left；
 
  
 
-- Alt属性（注意是“属性”而不是“标签”）包括替换说明，对于图像和图像热点是必须的。它只能用在img、area和input元素中（包括applet元素）。对于input元素，alt属性意在用来替换提交按钮的图片。
+- Alt属性（注意是“属性”而不是“标签”）包括替换说明，对于图像和图像热点是必须的。它只能用在img、area（带有可点击区域的图像映射）和input元素image中（包括applet元素）。对于input元素，alt属性意在用来替换提交按钮的图片。
 - 使用alt属性是为了给那些不能看到你文档中图像的浏览者提供文字说明。这包括那些使用本来就不支持图像显示或者图像显示被关闭的浏览器的用户，视觉障碍的用户和使用屏幕阅读器的用户。替换文字是用来替代图像而不是提供额外说明文字的。
 - 文字的图像图片设置替换文字是最简单的，图像中包含的文字一般来说就可以作为alt属性值。Alt属性值得长度必须少于100个英文字符或者用户必须保证替换文字尽可能的短。
 
@@ -1732,61 +1732,37 @@ div:before{
 
 ***\*1)\** \**绘画 canvas;\****
 
-> 类似windows自带的画图板，可绘制线、框、路径、图……，InternetExplorer 9、Firefox、Opera、Chrome 以及 Safari 支持 <canvas> 及其属性和方法。
->
-> 画图需要的要素
->
-> a)  笔，用笔可以画线、圆、矩形、文本等
->
-> b)  颜色
->
-> c)  画板
->
->  
+ 类似windows自带的画图板，可绘制线、框、路径、图……，InternetExplorer 9、Firefox、Opera、Chrome 以及 Safari 支持 <canvas> 及其属性和方法。
+
+ 画图需要的要素
+
+ a)  笔，用笔可以画线、圆、矩形、文本等
+
+ b)  颜色
+
+ c)  画板
+
+  
 
 ***\*2)\** \**本地离线存储 localStorage\****
 
-> 长期存储数据，浏览器关闭后数据不丢失;
->
-> 1.特点
->
-> 数据永久存储，没有时间限制；大小限制5M(够用了)；只存储字符串。
->
-> 2.数据存取方式
+ 长期存储数据，浏览器关闭后数据不丢失;
+
+ 1.特点
+
+ 数据永久存储，没有时间限制；大小限制5M(够用了)；只存储字符串。
+
+ 2.数据存取方式
 
 > > ```javascript
 > > localStorage.a = 3;//设置a为"3"
-> > 
-> > 
-> > 
 > > localStorage["a"] = "sfsf";//设置a为"sfsf"，覆盖上面的值
-> > 
-> > 
-> > 
 > > localStorage.setItem("b","isaac");//设置b为"isaac"
-> > 
-> > 
-> > 
 > > var a1 = localStorage["a"];//获取a的值
-> > 
-> > 
-> > 
 > > var a2 = localStorage.a;//获取a的值
-> > 
-> > 
-> > 
 > > var b = localStorage.getItem("b");//获取b的值
-> > 
-> > 
-> > 
 > > var b2= localStorage.key(0);//获取第一个key的内容
-> > 
-> > 
-> > 
 > > localStorage.removeItem("c");//清除c的值
-> > 
-> > 
-> > 
 > > localStorage.clear();//清除所有的数据
 > > ```
 
@@ -1802,29 +1778,11 @@ div:before{
 
 > > ```javascript
 > > if(window.addEventListener){
-> > 
-> > 
-> > 
 > >  window.addEventListener("storage",handle_storage,false);//
-> > 
-> > 
-> > 
 > > }else if(window.attachEvent){ //兼容IE
-> > 
-> > 
-> > 
 > >  window.attachEvent("onstorage",handle_storage);
-> > 
-> > 
-> > 
 > > }
-> > 
-> > 
-> > 
 > > function handle_storage(e){
-> > 
-> > 
-> > 
 > >  }
 > > ```
 
@@ -1875,11 +1833,14 @@ div:before{
 
 1、使用静态资源的html5shiv包
 
+```jsx
+
 <!--[if lt IE9]>
 
 <script src="http://cdn.static.runoob.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
 
 <![endif]-->
+```
 
 2、载入后，初始化新标签的css
 
@@ -3874,4 +3835,3 @@ display: none与visibility: hidden的区别
 
 ## 
 
-# 一、create-react-app
