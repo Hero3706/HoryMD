@@ -2511,116 +2511,34 @@ avi mpg rmvb rm mp4 3gp
 
 ```html
 <!DOCTYPE html>
-
-
-
 <html lang="en">
-
-
-
 <head>
-
-
-
     <meta charset="UTF-8">
-
-
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-
-
     <title>Document</title>
-
-
-
     <style>
-
-
-
         canvas {
-
-
-
             border: 1px solid #000;
-
-
-
         }
-
-
-
     </style>
-
-
-
 </head>
-
-
-
 <body>
-
-
-
     <canvas id="mycanvas" width="200" height="200"></canvas>
-
-
-
 </body>
-
-
-
 </html>
-
-
-
 <script>
-
-
-
     var mycanvas = document.getElementById('mycanvas');
-
-
-
     var ctx = mycanvas.getContext('2d');
-
-
-
     ctx.moveTo(50,50);
-
-
-
     ctx.lineTo(150,50);
-
-
-
     ctx.lineTo(150,150);
-
-
-
     ctx.lineTo(50,150);
-
-
-
     ctx.closePath();
-
-
-
     ctx.fillStyle = 'red';
-
-
-
     ctx.fill();
-
-
-
 </script>
 ```
-
  
 
 效果：
@@ -2647,48 +2565,17 @@ avi mpg rmvb rm mp4 3gp
 
 ```html
 <head>
-
-
-
     <style>
-
-
-
         canvas {
-
-
-
             border: 1px solid #000;
-
-
-
             width: 500px;
-
-
-
             height: 500px;
-
-
-
         }
-
-
-
     </style>
-
-
-
 </head>
-
-
-
 <body>
 
-
-
     <canvas id="mycanvas"></canvas>
-
-
 
 </body>
 ```
@@ -2705,17 +2592,17 @@ avi mpg rmvb rm mp4 3gp
 
 这里通过三个实例讲解一下border-image:
 
-![这里写图片描述](https://img-blog.csdn.net/20171222111308044?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjQxNDcwNTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![img](https://img-blog.csdn.net/20171222111308044?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjQxNDcwNTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 **原图**是这样子的：
 
-![这里写图片描述](https://img-blog.csdn.net/20171222112033887?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjQxNDcwNTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![img](https://img-blog.csdn.net/20171222112033887?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjQxNDcwNTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 接下来我们使用border-image来处理这个图片为**边框图**：
 
 ####  
 
-![这里写图片描述](https://img-blog.csdn.net/20171222111435963?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjQxNDcwNTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![img](https://img-blog.csdn.net/20171222111435963?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjQxNDcwNTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 **代码：**
 
 ```js
