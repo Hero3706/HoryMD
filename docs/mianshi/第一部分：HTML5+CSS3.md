@@ -2550,7 +2550,7 @@ avi mpg rmvb rm mp4 3gp
 代码：
 
 ```html
- <canvas id="mycanvas" width="200" height="200"></canvas>
+ <canvas id="mycanvas" width="500" height="500"></canvas>
 ```
 
 效果：
@@ -2600,7 +2600,7 @@ avi mpg rmvb rm mp4 3gp
 
 接下来我们使用border-image来处理这个图片为**边框图**：
 
-####  
+
 
 ![img](https://img-blog.csdn.net/20171222111435963?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjQxNDcwNTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 **代码：**
@@ -2618,11 +2618,6 @@ avi mpg rmvb rm mp4 3gp
 
 
 
-
-
-
-
-
 ## 55、解释在ie低版本下的怪异盒模型和CSS3的怪异盒模型和弹性盒模型
 
 一、怪异盒模型
@@ -2635,7 +2630,9 @@ avi mpg rmvb rm mp4 3gp
 
 　　**简而言之就是**，一般的盒子都是属于这种，最显著的特点就是加上padding后，盒子会被撑大，需要减去对应的高度或宽度。
 
-![img](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDIwLmNuYmxvZ3MuY29tL2Jsb2cvMTk1NTE2MC8yMDIwMDQvMTk1NTE2MC0yMDIwMDQxNTA4MTExMTQ0Mi02MTQxMzA1NjYucG5n?x-oss-process=image/format,png)2、border-box
+![img](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDIwLmNuYmxvZ3MuY29tL2Jsb2cvMTk1NTE2MC8yMDIwMDQvMTk1NTE2MC0yMDIwMDQxNTA4MTExMTQ0Mi02MTQxMzA1NjYucG5n?x-oss-process=image/format,png)
+
+2、border-box
 
 　　为元素设定的宽度和高度决定了元素的边框盒。就是说，为元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制。
 
@@ -3046,6 +3043,9 @@ css中添加
 
 ## 65、如果我不输入<!DOCTYPE HTML>，HTML 5能工作吗？
 
+```jsx
+<!DOCTYPE HTML>
+```
 No，浏览器将无法识别HTML文件，并且HTML 5标签将无法正常工作。
 
 ## 66、哪些浏览器支持HTML 5？
