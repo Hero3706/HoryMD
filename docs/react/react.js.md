@@ -1,7 +1,4 @@
-# 〇、说明
 
-> 《千锋HTML5好程序员第三阶段React》学习材料——古艺散人
->
 
 # 一、create-react-app	
 
