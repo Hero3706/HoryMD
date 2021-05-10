@@ -2176,7 +2176,7 @@ const withCopyright = (WrappedComponent) => {
       return (
         <Fragment>
           <WrappedComponent />
-          <div>&copy;版权所有 千锋教育 2019 </div>
+          <div>&copy;版权所有 2019 </div>
         </Fragment>
       )
     }
@@ -2873,7 +2873,7 @@ react-redux提供两个核心的api：
 
 ```js
 const state = {
-  str: '千锋教育',
+  str: 'andy',
   obj: {
     y: 1
   },
@@ -2890,7 +2890,7 @@ console.log(newState === state) // true
 
 ```js
 const state = {
-  str: '千锋教育',
+  str: 'andy',
   obj: {
     y: 1
   },
@@ -2898,7 +2898,7 @@ const state = {
 }
 const newState = state
 
-newState.str = '千锋教育H5学院'
+newState.str = 'andyTT'
 
 console.log(state.str, newState.str)
 ```
@@ -2907,7 +2907,7 @@ console.log(state.str, newState.str)
 
 ```js
 const state = {
-  str: '千锋教育',
+  str: 'andy',
   obj: {
     y: 1
   },
@@ -2915,7 +2915,7 @@ const state = {
 }
 const newState = Object.assign({}, state)
 
-newState.str = '千锋教育H5学院'
+newState.str = 'andyTT'
 
 console.log(state.str, newState.str)
 ```
@@ -2924,7 +2924,7 @@ console.log(state.str, newState.str)
 
 ```js
 const state = {
-  str: '千锋教育',
+  str: 'andy',
   obj: {
     y: 1
   },
@@ -2944,7 +2944,7 @@ console.log(state, newState)
 import { cloneDeep } from 'lodash'
 
 const state = {
-  str: '千锋教育',
+  str: 'andy',
   obj: {
     y: 1
   },
